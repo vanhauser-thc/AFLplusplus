@@ -2503,20 +2503,20 @@ u8 input_to_state_stage(afl_state_t *afl, u8 *orig_buf, u8 *buf, u32 len) {
 #ifdef _DEBUG
       fprintf(stderr, "TAINT FAILED\n");
 #endif
+      return 0;
+
+    }
+
+    else if (taint->pos == 0 && taint->len == len) {
+
+#ifdef _DEBUG
+      fprintf(stderr, "TAINT FULL\n");
+#endif
       afl->queue_cur->colorized = CMPLOG_LVL_MAX;
       return 0;
 
     }
 
-#ifdef _DEBUG
-    else if (taint->pos == 0 && taint->len == len) {
-
-      fprintf(stderr, "TAINT FULL\n");
-      return 0;
-
-    }
-
-#endif
 
   } else {
 
